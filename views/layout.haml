@@ -1,0 +1,18 @@
+!!! 5
+%html
+  %head
+    %meta(charset="utf-8")
+    %title Grok UI
+    %link(rel="stylesheet" href="/application.css" type="text/css" charset="utf-8")
+    %script(src="/application.js" type="text/javascript" charset="utf-8")
+    %script(type="text/javascript" charset="utf-8")
+      :javascript
+        var jQuery  = require("jqueryify");
+        var exports = this;
+        jQuery(function(){
+          var App = require("index");
+          exports.app = new App({el: $("body")});
+        });
+  %body
+    = yield
+
