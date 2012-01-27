@@ -17,14 +17,14 @@ end
 post "/api/grok" do
   content_type "application/json"
 
-  input = params[:input]
-  pattern = params[:pattern]
+  text = params[:text]
+  pattern = params[:pattern] || "%{WORD:hello}"
 
   grok = Grok.new
   Dir.glob("#{PATTERNS_DIR}/*").each { |p| grok.add_patterns_from_file(p) }
 
   grok.compile(pattern)
-  m = grok.match(input)
+  m = grok.match(text)
 
   response = { }
   if m

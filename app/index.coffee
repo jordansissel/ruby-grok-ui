@@ -8,8 +8,11 @@ class App extends Spine.Controller
     super
     @log("Initialized")
 
+    Spine.Route.setup(shim: true)
+
     # Create the Grok controller
-    @grok = new Grok
-    @navigate "/grok"
+
+    grok = new Grok
+    @append(grok)
 
 module.exports = App

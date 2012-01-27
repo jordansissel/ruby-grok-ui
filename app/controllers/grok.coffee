@@ -1,22 +1,41 @@
 Spine = require("spine")
 
-class TextInputController extends Spine.Controller
-  constructor: ->
-    super
+class GrokResult extends Spine.Controller
+  render: -> @html(require("views/grok/result")(@))
+
+  update: (result) -> 
+    @log(@el)
+    @result = result
     @render()
 
-  render: ->
-    @html require("views/grok/index")(@)
-
 class Grok extends Spine.Controller
-  constructor: ->
-    super
-    @textinput = new TextInputController
+  elements:
+    "#grok-input": "input" # map to @input
 
-    @routes(
-      "/grok": (params) -> @textinput.active(params)
-      #"/events/:name": (params) -> @event.active(params)
-      #"/events/:name/create": (params) -> @event_create.active(params)
+  events:
+    "change #grok-input": "input_changed"
+    "keyup #grok-input": "input_changed"
+    
+  constructor: -> 
+    super
+    @result = new GrokResult(el: $("#grok-results"))
+    @render()
+
+  render: -> @html(require("views/grok/index")(@))
+
+  input_changed: (e) ->
+    val = @input.val()
+    @update(val) if val != @text
+
+  update: (val) ->
+    @text = val
+    @log(val)
+    $.ajax(
+      url: "/api/grok"
+      type: "POST"
+      data:
+        text: @text
+      success: (data) => @result.update(data)
     )
 
 module.exports = Grok

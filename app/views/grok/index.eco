@@ -1,2 +1,7 @@
-<label for="text-input">Input text:</label>
-<input type="text" id="text-input">
+<div class="grok-input">
+  <label for="text-input">Input text:</label>
+  <textarea id="grok-input" rows="4" cols="80" placeholder="Put a sample log line here"></textarea>
+</div>
+
+<div id="grok-results">
+</div>
