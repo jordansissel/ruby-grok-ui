@@ -1,4 +1,7 @@
 <div class="grok-input">
+  <div class="hint">
+    Put a sample log line below, or type some text and see what grok discovery comes up with
+  </div>
   <label for="text-input">Input text:</label>
   <textarea id="grok-input" rows="4" cols="80" placeholder="Put a sample log line here"></textarea>
 </div>
