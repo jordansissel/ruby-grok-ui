@@ -18,21 +18,24 @@ post "/api/grok" do
   content_type "application/json"
 
   text = params[:text]
-  pattern = params[:pattern] || "%{WORD:hello}"
 
   grok = Grok.new
   Dir.glob("#{PATTERNS_DIR}/*").each { |p| grok.add_patterns_from_file(p) }
 
+  pattern = grok.discover(text)
   grok.compile(pattern)
-  m = grok.match(text)
 
-  response = { }
+  m = grok.match(text)
+  data = {}
   if m
-    response["captures"] = m.captures
-    response["status"] = "success"
+    data["captures"] = m.captures
+    data["pattern"] = pattern
+    data["expanded_pattern"] = grok.expanded_pattern
+    data["status"] = "success"
   else
-    response["status"] = "failure"
+    data["status"] = "failure"
+    data["pattern"] = pattern
   end
 
-  body response.to_json
+  body data.to_json
 end

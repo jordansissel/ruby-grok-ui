@@ -1,5 +1,6 @@
 run: 
-	ruby grokui.rb
+	foreman start
+	#ruby grokui.rb
 	#node /home/jls/node_modules/hem/bin/hem server
 
 build:

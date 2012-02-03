@@ -4,9 +4,10 @@ class GrokResult extends Spine.Controller
   render: -> @html(require("views/grok/result")(@))
 
   update: (result) -> 
-    @log(@el)
     @result = result
+    @log(result)
     @render()
+# end class GrokResult
 
 class Grok extends Spine.Controller
   elements:
@@ -18,8 +19,8 @@ class Grok extends Spine.Controller
     
   constructor: -> 
     super
-    @result = new GrokResult(el: $("#grok-results"))
     @render()
+    @result = new GrokResult(el: $("#grok-results", @el))
 
   render: -> @html(require("views/grok/index")(@))
 
@@ -29,7 +30,7 @@ class Grok extends Spine.Controller
 
   update: (val) ->
     @text = val
-    @log(val)
+    #@log(val)
     $.ajax(
       url: "/api/grok"
       type: "POST"
