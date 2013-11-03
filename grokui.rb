@@ -3,6 +3,7 @@
 require "rubygems"
 require "sinatra"
 require "grok-pure"
+require "json"
 
 __DIR__ = File.dirname(__FILE__)
 PUBLIC_DIR = File.join(__DIR__, "public")
